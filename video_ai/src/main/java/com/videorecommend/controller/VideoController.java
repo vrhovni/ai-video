@@ -105,8 +105,8 @@ public class VideoController {
     public ResponseEntity<?> getVideoById(@PathVariable Long id) {
         log.info("开始获取视频详情，id={}", id);
         try {
-            Optional<Video> video = videoService.findById(id);
-            if (video.isPresent()) {
+        Optional<Video> video = videoService.findById(id);
+        if (video.isPresent()) {
                 Video videoData = video.get();
                 
                 // 确保视频URL是完整的
@@ -118,9 +118,9 @@ public class VideoController {
                 
                 log.info("获取视频详情成功，title={}, videoUrl={}", videoData.getTitle(), videoData.getVideoUrl());
                 return ResponseEntity.ok(videoData);
-            } else {
+        } else {
                 log.warn("视频不存在，id={}", id);
-                return ResponseEntity.notFound().build();
+            return ResponseEntity.notFound().build();
             }
         } catch (Exception e) {
             log.error("获取视频详情失败，id={}, 错误信息: {}", id, e.getMessage(), e);
@@ -175,10 +175,10 @@ public class VideoController {
                 return ResponseEntity.status(500).body("数据库连接失败: " + dbError.getMessage());
             }
             
-            Pageable pageable = PageRequest.of(page, size);
+        Pageable pageable = PageRequest.of(page, size);
             log.info("创建分页对象: {}", pageable);
             
-            Page<Video> videos = videoService.getPublicVideos(pageable);
+        Page<Video> videos = videoService.getPublicVideos(pageable);
             log.info("获取公开视频成功，共{}条", videos.getTotalElements());
             
             // 打印前几条视频信息用于调试
@@ -188,7 +188,7 @@ public class VideoController {
                     firstVideo.getId(), firstVideo.getTitle(), firstVideo.getCategory());
             }
             
-            return ResponseEntity.ok(videos);
+        return ResponseEntity.ok(videos);
         } catch (Exception e) {
             log.error("获取公开视频失败，错误信息: {}", e.getMessage(), e);
             // 打印完整的异常堆栈
@@ -210,10 +210,10 @@ public class VideoController {
             @RequestParam(defaultValue = "20") int size) {
         log.info("开始获取推荐视频，page={}, size={}", page, size);
         try {
-            Pageable pageable = PageRequest.of(page, size);
-            Page<Video> videos = videoService.getFeaturedVideos(pageable);
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Video> videos = videoService.getFeaturedVideos(pageable);
             log.info("获取推荐视频成功，共{}条", videos.getTotalElements());
-            return ResponseEntity.ok(videos);
+        return ResponseEntity.ok(videos);
         } catch (Exception e) {
             log.error("获取推荐视频失败", e);
             throw e;
@@ -230,10 +230,10 @@ public class VideoController {
             @RequestParam(defaultValue = "20") int size) {
         log.info("开始获取分类视频，category={}, page={}, size={}", category, page, size);
         try {
-            Pageable pageable = PageRequest.of(page, size);
-            Page<Video> videos = videoService.getVideosByCategory(category, pageable);
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Video> videos = videoService.getVideosByCategory(category, pageable);
             log.info("获取分类视频成功，共{}条", videos.getTotalElements());
-            return ResponseEntity.ok(videos);
+        return ResponseEntity.ok(videos);
         } catch (Exception e) {
             log.error("获取分类视频失败", e);
             throw e;
@@ -247,9 +247,9 @@ public class VideoController {
     public ResponseEntity<List<Video>> getVideosByUploader(@PathVariable Long uploaderId) {
         log.info("开始获取上传者视频，uploaderId={}", uploaderId);
         try {
-            List<Video> videos = videoService.getVideosByUploader(uploaderId);
+        List<Video> videos = videoService.getVideosByUploader(uploaderId);
             log.info("获取上传者视频成功，共{}条", videos.size());
-            return ResponseEntity.ok(videos);
+        return ResponseEntity.ok(videos);
         } catch (Exception e) {
             log.error("获取上传者视频失败", e);
             throw e;
@@ -266,10 +266,10 @@ public class VideoController {
             @RequestParam(defaultValue = "20") int size) {
         log.info("开始按标题搜索视频，title={}, page={}, size={}", title, page, size);
         try {
-            Pageable pageable = PageRequest.of(page, size);
-            Page<Video> videos = videoService.searchVideosByTitle(title, pageable);
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Video> videos = videoService.searchVideosByTitle(title, pageable);
             log.info("按标题搜索视频成功，共{}条", videos.getTotalElements());
-            return ResponseEntity.ok(videos);
+        return ResponseEntity.ok(videos);
         } catch (Exception e) {
             log.error("按标题搜索视频失败", e);
             throw e;
@@ -286,10 +286,10 @@ public class VideoController {
             @RequestParam(defaultValue = "20") int size) {
         log.info("开始按描述搜索视频，description={}, page={}, size={}", description, page, size);
         try {
-            Pageable pageable = PageRequest.of(page, size);
-            Page<Video> videos = videoService.searchVideosByDescription(description, pageable);
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Video> videos = videoService.searchVideosByDescription(description, pageable);
             log.info("按描述搜索视频成功，共{}条", videos.getTotalElements());
-            return ResponseEntity.ok(videos);
+        return ResponseEntity.ok(videos);
         } catch (Exception e) {
             log.error("按描述搜索视频失败", e);
             throw e;
@@ -306,10 +306,10 @@ public class VideoController {
             @RequestParam(defaultValue = "20") int size) {
         log.info("开始按标签搜索视频，tag={}, page={}, size={}", tag, page, size);
         try {
-            Pageable pageable = PageRequest.of(page, size);
-            Page<Video> videos = videoService.searchVideosByTag(tag, pageable);
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Video> videos = videoService.searchVideosByTag(tag, pageable);
             log.info("按标签搜索视频成功，共{}条", videos.getTotalElements());
-            return ResponseEntity.ok(videos);
+        return ResponseEntity.ok(videos);
         } catch (Exception e) {
             log.error("按标签搜索视频失败", e);
             throw e;
@@ -325,10 +325,10 @@ public class VideoController {
             @RequestParam(defaultValue = "20") int size) {
         log.info("开始获取热门视频，page={}, size={}", page, size);
         try {
-            Pageable pageable = PageRequest.of(page, size);
-            Page<Video> videos = videoService.getPopularVideos(pageable);
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Video> videos = videoService.getPopularVideos(pageable);
             log.info("获取热门视频成功，共{}条", videos.getTotalElements());
-            return ResponseEntity.ok(videos);
+        return ResponseEntity.ok(videos);
         } catch (Exception e) {
             log.error("获取热门视频失败", e);
             throw e;
@@ -344,10 +344,10 @@ public class VideoController {
             @RequestParam(defaultValue = "20") int size) {
         log.info("开始获取最新视频，page={}, size={}", page, size);
         try {
-            Pageable pageable = PageRequest.of(page, size);
-            Page<Video> videos = videoService.getLatestVideos(pageable);
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Video> videos = videoService.getLatestVideos(pageable);
             log.info("获取最新视频成功，共{}条", videos.getTotalElements());
-            return ResponseEntity.ok(videos);
+        return ResponseEntity.ok(videos);
         } catch (Exception e) {
             log.error("获取最新视频失败", e);
             throw e;
